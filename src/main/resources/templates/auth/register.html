@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear cuenta - Gourmet</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script th:src="@{/js/navbar.js}" defer></script>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar(${false})"></div>
+
+<main class="auth-page">
+    <section class="auth-card">
+        <div class="auth-icon">
+            <i class="bi bi-person-plus-fill"></i>
+        </div>
+
+        <h2>Crear cuenta</h2>
+        <p class="auth-subtitle">Únete a nuestra comunidad y realiza tus reservas fácilmente.</p>
+
+        <form th:action="@{/register}" th:object="${registerDto}" method="post" class="auth-form">
+
+            <!-- NOMBRES -->
+            <div class="form-group">
+                <label for="nombres">Nombres completos</label>
+                <div class="input-shell">
+                    <i class="bi bi-person"></i>
+                    <input id="nombres" th:field="*{nombres}" placeholder="Tu nombre completo" required>
+                </div>
+                <p class="error-text"
+                   th:if="${#fields.hasErrors('nombres')}"
+                   th:errors="*{nombres}"></p>
+            </div>
+
+            <!-- CORREO -->
+            <div class="form-group">
+                <label for="correo">Correo electrónico</label>
+                <div class="input-shell">
+                    <i class="bi bi-envelope"></i>
+                    <input id="correo" type="email" th:field="*{correo}" placeholder="tu@correo.com" required>
+                </div>
+                <p class="error-text"
+                   th:if="${#fields.hasErrors('correo')}"
+                   th:errors="*{correo}"></p>
+            </div>
+
+            <!-- TELEFONO -->
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <div class="input-shell">
+                    <i class="bi bi-telephone"></i>
+                    <input id="telefono" th:field="*{telefono}" placeholder="999999999" required>
+                </div>
+                <p class="error-text"
+                   th:if="${#fields.hasErrors('telefono')}"
+                   th:errors="*{telefono}"></p>
+            </div>
+
+            <!-- CLAVE -->
+            <div class="form-group">
+                <label for="clave">Contraseña</label>
+                <div class="input-shell">
+                    <i class="bi bi-lock"></i>
+                    <input id="clave" type="password" th:field="*{clave}" placeholder="Clave" required>
+                </div>
+                <p class="error-text"
+                   th:if="${#fields.hasErrors('clave')}"
+                   th:errors="*{clave}"></p>
+            </div>
+
+            <!-- CONFIRMAR CLAVE -->
+            <div class="form-group">
+                <label for="confirmarClave">Confirmar contraseña</label>
+                <div class="input-shell">
+                    <i class="bi bi-lock-fill"></i>
+                    <input id="confirmarClave" type="password" th:field="*{confirmarClave}" placeholder="Confirmar clave" required>
+                </div>
+                <p class="error-text"
+                   th:if="${#fields.hasErrors('confirmarClave')}"
+                   th:errors="*{confirmarClave}"></p>
+            </div>
+
+            <button type="submit" class="btn-primary">Registrarme</button>
+
+            <p class="register-text">
+                ¿Ya tienes cuenta?
+                <a th:href="@{/login}">Inicia sesión aquí</a>.
+            </p>
+
+            <!-- Mensajes generales -->
+            <p th:if="${error}" class="error-text" th:text="${error}"></p>
+            <p th:if="${ok}" class="ok-text" th:text="${ok}"></p>
+
+        </form>
+    </section>
+</main>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gourmet - Inicio</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">    
+    <script th:src="@{/js/navbar.js}" defer></script>    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar(${true})"></div>
+
+<!-- HERO -->
+<section class="hero">
+    <img th:src="@{/images/gourmet-background.png}" alt="Restaurante Gourmet" class="hero-img">
+</section>
+
+<section id="historia" class="historia-section">
+    <h2>Nuestra historia</h2>
+    <p>
+    Gourmet nació de un sueño sencillo, compartir nuestra pasión por la cocina excepcional.
+     No se trata solo de ingredientes de lujo, sino del cuidado en cada detalle.
+    </p>
+    <p>
+    Fundamos Gourmet para crear un espacio acogedor donde la alta cocina se sintiera cercana,
+     un lugar para celebrar los pequeños y grandes momentos. Bienvenidos a nuestra casa.
+    </p>
+</section>
+
+<!-- HORARIOS -->
+<section id="horarios" class="horarios-section">
+    <div class="horarios-img-wrapper">
+        <img src="/images/horario.jpg" alt="Local Gourmet" class="horarios-img">
+    </div>
+
+    <div class="horarios-info">
+        <h2>HORARIO DE ATENCIÓN</h2>
+        <p class="linea">Todos los días: 1:00 p.m. a 10:00 p.m.</p>
+
+        <a th:href="@{/reservar}" class="btn-reservas">
+            RESERVAR AHORA
+        </a>
+    </div>
+</section>
+
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+/* ========== HOME - DISEÑO MEJORADO ========== */
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Compensa la altura del navbar fijo */
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ====== HERO ====== */
+.hero {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, rgba(245, 247, 250, 0.8));
+    pointer-events: none;
+}
+
+.hero-img {
+    width: 100%;
+    height: 80vh;
+    min-height: 600px;
+    max-height: 800px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    animation: heroZoom 0.8s ease-out;
+}
+
+@keyframes heroZoom {
+    from {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ====== ANCHOR POINT FIX ====== */
+#historia,
+#horarios {
+    scroll-margin-top: 100px; /* Espacio adicional al hacer scroll a estas secciones */
+}
+
+/* ====== NUESTRA HISTORIA ====== */
+.historia-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 7.5rem 3rem 8rem;
+    text-align: center;
+    color: #1a1a1a;
+    position: relative;
+    animation: fadeInUp 0.8s ease-out 0.3s backwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.historia-section::before {
+    content: '';
+    position: absolute;
+    top: 6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #000, transparent);
+    opacity: 0.3;
+}
+
+.historia-section h2 {
+    font-family: "Playfair Display", "Times New Roman", serif;
+    font-size: 3rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    position: relative;
+    padding-top: 2rem;
+}
+
+.historia-section p {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    color: #2f2937;
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+    text-align: justify;
+    text-align-last: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.historia-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* ====== HORARIOS ====== */
+.horarios-section {
+    display: flex;
+    gap: 0;
+    background: linear-gradient(135deg, #e5dfe4 0%, #d5cfd4 100%);
+    padding: 0;
+    align-items: stretch;
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.horarios-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1), transparent);
+    pointer-events: none;
+}
+
+.horarios-img-wrapper {
+    flex: 0 0 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.horarios-img-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 70%, rgba(213, 207, 212, 0.5));
+    pointer-events: none;
+}
+
+.horarios-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.6s ease;
+}
+
+.horarios-img-wrapper:hover .horarios-img {
+    transform: scale(1.05);
+}
+
+.horarios-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #2f2b32;
+    font-family: "Georgia", "Times New Roman", serif;
+    padding: 4rem 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.horarios-info h2 {
+    font-family: "Playfair Display", "Times New Roman", serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #2f2b32 0%, #4a4548 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.horarios-info .linea {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+    color: #3f3b42;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.horarios-info .linea::before,
+.horarios-info .linea::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #2f2b32, transparent);
+}
+
+.horarios-info .linea::before {
+    top: 0;
+}
+
+.horarios-info .linea::after {
+    bottom: 0;
+}
+
+/* ====== BOTÓN RESERVAS ====== */
+.btn-reservas {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 4rem;
+    border: 2px solid #2f2b32;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #2f2b32;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(47, 43, 50, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-reservas::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #2f2b32 0%, #1f1b22 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btn-reservas span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-reservas:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(47, 43, 50, 0.25);
+    color: #fff;
+}
+
+.btn-reservas:hover::before {
+    opacity: 1;
+}
+
+.btn-reservas:active {
+    transform: translateY(-1px);
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 1024px) {
+    .historia-section {
+        padding: 6rem 2rem 4rem;
+    }
+
+    .historia-section p {
+        font-size: 1.25rem;
+        line-height: 2rem;
+    }
+
+    .horarios-section {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .horarios-img-wrapper {
+        flex: 0 0 auto;
+        height: 400px;
+    }
+
+    .horarios-img-wrapper::after {
+        background: linear-gradient(to bottom, transparent 70%, rgba(213, 207, 212, 0.5));
+    }
+
+    .horarios-info {
+        padding: 3rem 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    html {
+        scroll-padding-top: 70px;
+    }
+
+    #historia,
+    #horarios {
+        scroll-margin-top: 80px;
+    }
+
+    .hero-img {
+        height: 60vh;
+        min-height: 500px;
+    }
+
+    .historia-section {
+        padding: 4rem 1.5rem 3rem;
+    }
+
+    .historia-section h2 {
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .historia-section p {
+        font-size: 1.15rem;
+        line-height: 1.9rem;
+        text-align: center;
+    }
+
+    .horarios-img-wrapper {
+        height: 350px;
+    }
+
+    .horarios-info h2 {
+        font-size: 2rem;
+    }
+
+    .horarios-info .linea {
+        font-size: 1.15rem;
+    }
+
+    .btn-reservas {
+        padding: 0.9rem 3rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-img {
+        height: 50vh;
+        min-height: 400px;
+    }
+
+    .historia-section {
+        padding: 3rem 1rem 2rem;
+    }
+
+    .historia-section h2 {
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+    }
+
+    .historia-section p {
+        font-size: 1.05rem;
+        line-height: 1.75rem;
+    }
+
+    .horarios-img-wrapper {
+        height: 300px;
+    }
+
+    .horarios-info {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .horarios-info h2 {
+        font-size: 1.6rem;
+    }
+
+    .horarios-info .linea {
+        font-size: 1rem;
+    }
+
+    .btn-reservas {
+        padding: 0.85rem 2.5rem;
+        font-size: 0.8rem;
+    }
+}

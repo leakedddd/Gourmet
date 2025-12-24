@@ -1,0 +1,169 @@
+/* === PÁGINA DE REGISTRO (Gourmet) === */
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #f8f5f1 0%, #f3f3f3 50%, #efefef 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.auth-page {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 20px 80px;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 18px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.06);
+    padding: 2.8rem 2.4rem;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+}
+
+.auth-icon {
+    width: 64px;
+    height: 64px;
+    background: #ece5de;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1rem;
+    color: #1a1a1a;
+    font-size: 1.6rem;
+}
+
+.auth-card h2 {
+    font-family: "Playfair Display", "Times New Roman", serif;
+    font-size: 1.7rem;
+    color: #1a1a1a;
+    margin-bottom: 0.4rem;
+}
+
+.auth-subtitle {
+    font-size: 0.9rem;
+    color: #6a6a6a;
+    margin-bottom: 1.8rem;
+}
+
+/* === Formulario === */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+/* --- Input con icono --- */
+.input-shell {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #fff;
+    border: 1px solid #d9d6d3;
+    border-radius: 12px;
+    padding: 0.5rem 0.8rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.input-shell i {
+    color: #8b8680;
+    font-size: 1rem;
+}
+
+.input-shell input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 0.92rem;
+    padding: 0.4rem 0;
+}
+
+.input-shell:focus-within {
+    border-color: #000;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.03);
+}
+
+/* --- Botón principal --- */
+.btn-primary {
+    margin-top: 0.5rem;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 1.2rem;
+    width: 100%;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* --- Texto de registro / login --- */
+.register-text {
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    color: #6a6a6a;
+    text-align: center;
+}
+
+.register-text a {
+    color: #000;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+/* --- Mensajes de estado --- */
+.error-text {
+    margin-top: 0.6rem;
+    background: #ffe6e6;
+    border: 1px solid #ffbaba;
+    color: #9f1c1c;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+.ok-text {
+    margin-top: 0.6rem;
+    background: #e7ffe7;
+    border: 1px solid #b2f5b2;
+    color: #1d6b1d;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    text-align: center;
+}

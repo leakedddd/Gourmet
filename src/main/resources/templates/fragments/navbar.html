@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<header class="topbar" th:fragment="navbar(esHome)">
+    <div class="topbar-inner">
+        <div class="brand">
+            <a th:href="@{/}" class="brand-link">Gourmet</a>
+        </div>
+
+        <nav class="main-nav">
+            <a href="#historia" class="nav-link" th:if="${esHome}">NUESTRA HISTORIA</a>
+            <a href="#horarios" class="nav-link" th:if="${esHome}">HORARIOS</a>
+
+            <!-- Solo logueado -->
+            <a th:href="@{/mis-reservas}" class="nav-link" sec:authorize="hasRole('CLIENTE')">
+                MIS RESERVAS
+            </a>
+        </nav>
+
+        <div class="actions">
+            <!-- Reservar: solo CLIENTE (si quieres que anónimo vaya a login, está OK también) -->
+            <a th:href="@{/reservar}" class="btn-reservar" sec:authorize="hasRole('CLIENTE')">RESERVAR</a>
+            <a th:href="@{/login}" class="btn-reservar" sec:authorize="isAnonymous()">RESERVAR</a>
+
+            <div class="user-menu-wrapper">
+                <button class="user-btn">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+
+                <div class="user-menu-dropdown" id="userMenuDropdown">
+
+                    <!-- NO LOGEADO -->
+                    <div class="menu-block" sec:authorize="isAnonymous()">
+                        <a th:href="@{/login}" class="menu-item">Iniciar sesión</a>
+                        <a th:href="@{/register}" class="menu-item">Registrarse</a>
+                    </div>
+
+                    <!-- CLIENTE -->
+                    <div class="menu-block" sec:authorize="hasRole('CLIENTE')">
+                        <a th:href="@{/mis-reservas}" class="menu-item">Mis reservas</a>
+                        <form th:action="@{/logout}" method="post" class="menu-item">
+                            <button type="submit">Cerrar sesión</button>
+                        </form>
+                    </div>
+
+                    <!-- EMPLEADO -->
+                    <div class="menu-block" sec:authorize="hasRole('EMPLEADO')">
+                        <a th:href="@{/admin/reservas}" class="menu-item">Admin</a>
+                        <form th:action="@{/logout}" method="post" class="menu-item">
+                            <button type="submit">Cerrar sesión</button>
+                        </form>
+                    </div>
+
+                    <!-- ADMIN -->
+                    <div class="menu-block" sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/admin/reservas}" class="menu-item">Admin</a>
+                        <a th:href="@{/admin/personal}" class="menu-item">Gestionar empleados</a>
+                        <form th:action="@{/logout}" method="post" class="menu-item">
+                            <button type="submit">Cerrar sesión</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+</html>

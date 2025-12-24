@@ -1,0 +1,21 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 100% del alto visible */
+}
+
+/* Contenedor principal de tu contenido */
+main {
+    flex: 1; /* ocupa todo el espacio libre */
+}
+
+/* Asegúrate que el footer no tenga position absolute */
+footer {
+    margin-top: auto; /* lo empuja al fondo */
+}

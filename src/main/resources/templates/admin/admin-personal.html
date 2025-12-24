@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Personal</title>
+
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-personal.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script th:src="@{/js/navbar.js}" defer></script>
+    <script th:src="@{/js/admin-personal.js}" defer></script>
+</head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar(${false})}"></div>
+
+<main class="admin-page">
+    <div class="admin-container">
+
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="header-text">
+                    <h1>Gestión de Personal</h1>
+                    <p>Administra empleados y sus roles en el sistema</p>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="abrirModalCrear()">
+                <i class="bi bi-plus-circle"></i>
+                Nuevo Empleado
+            </button>
+        </div>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <form th:action="@{/admin/personal}" method="get" class="search-form">
+                <div class="search-input-wrapper">
+                    <i class="bi bi-search"></i>
+                    <input type="text"
+                           name="busqueda"
+                           th:value="${busqueda}"
+                           placeholder="Buscar empleado por nombre..."
+                           class="search-input">
+                    <button type="button"
+                            class="clear-search"
+                            th:if="${busqueda != null and !busqueda.isEmpty()}"
+                            onclick="limpiarBusqueda()">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+                <button type="submit" class="btn-search">
+                    <i class="bi bi-search"></i>
+                    Buscar
+                </button>
+            </form>
+        </div>
+
+        <!-- Mensajes -->
+        <div th:if="${param.ok}" class="alert alert-success">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Operación realizada exitosamente</span>
+        </div>
+
+        <div th:if="${error}" class="alert alert-error">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <span th:text="${error}">Error</span>
+        </div>
+
+        <!-- Tabla -->
+        <div class="panel-card">
+            <div class="panel-card-header">
+                <h2>Empleados Registrados</h2>
+                <span class="count-badge" th:text="${totalElements} + ' empleado' + (${totalElements} != 1 ? 's' : '')">0 empleados</span>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="usuarios-table">
+                    <thead>
+                    <tr>
+                        <th>
+                            <i class="bi bi-person"></i>
+                            Nombre
+                        </th>
+                        <th>
+                            <i class="bi bi-envelope"></i>
+                            Correo
+                        </th>
+                        <th>
+                            <i class="bi bi-telephone"></i>
+                            Teléfono
+                        </th>
+                        <th>
+                            <i class="bi bi-shield-check"></i>
+                            Rol
+                        </th>
+                        <th>
+                            <i class="bi bi-toggle-on"></i>
+                            Estado
+                        </th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="u : ${empleados}">
+                        <td>
+                            <div class="user-cell">
+                                <div class="user-avatar">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <span th:text="${u.nombres}">Empleado</span>
+                            </div>
+                        </td>
+                        <td th:text="${u.correo}">correo@ejemplo.com</td>
+                        <td th:text="${u.telefono != null ? u.telefono : '-'}">-</td>
+                        <td>
+                                <span class="badge"
+                                      th:classappend="${u.rol.name() == 'ADMIN' ? 'badge-admin' : 'badge-empleado'}"
+                                      th:text="${u.rol}">
+                                    EMPLEADO
+                                </span>
+                        </td>
+                        <td>
+                                <span class="badge"
+                                      th:classappend="${u.activo ? 'badge-activo' : 'badge-inactivo'}"
+                                      th:text="${u.activo ? 'ACTIVO' : 'INACTIVO'}">
+                                    ACTIVO
+                                </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button type="button"
+                                        class="btn-action btn-edit"
+                                        th:attr="data-id=${u.idUsuario},
+                                                     data-rol=${u.rol.name()},
+                                                     data-nombre=${u.nombres}"
+                                        onclick="abrirModalCambiarRol(this)">
+                                    <i class="bi bi-pencil"></i>
+                                    Cambiar Rol
+                                </button>
+
+                                <button type="button"
+                                        th:classappend="${u.activo ? 'btn-deactivate' : 'btn-activate'}"
+                                        class="btn-action"
+                                        th:attr="data-id=${u.idUsuario},
+                                                     data-nombre=${u.nombres},
+                                                     data-activo=${u.activo}"
+                                        onclick="abrirModalEstado(this)">
+                                    <i th:class="${u.activo ? 'bi bi-x-circle' : 'bi bi-check-circle'}"></i>
+                                    <span th:text="${u.activo ? 'Desactivar' : 'Activar'}">Desactivar</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(empleados)}">
+                        <td colspan="6" class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p>No hay empleados registrados</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination-wrapper" th:if="${totalPages > 1}">
+                <div class="pagination-info">
+                    Mostrando <strong th:text="${empleados.size()}">0</strong> de <strong th:text="${totalElements}">0</strong> empleados
+                </div>
+
+                <nav class="pagination">
+                    <!-- Botón Anterior -->
+                    <a th:href="@{/admin/personal(page=${currentPage - 1}, busqueda=${busqueda})}"
+                       th:classappend="${currentPage == 0} ? 'disabled' : ''"
+                       class="page-link page-prev">
+                        <i class="bi bi-chevron-left"></i>
+                        Anterior
+                    </a>
+
+                    <!-- Números de página -->
+                    <div class="page-numbers">
+                        <!-- Primera página -->
+                        <a th:if="${currentPage > 2}"
+                           th:href="@{/admin/personal(page=0, busqueda=${busqueda})}"
+                           class="page-link">
+                            1
+                        </a>
+
+                        <!-- Puntos suspensivos si hay páginas intermedias -->
+                        <span th:if="${currentPage > 3}" class="page-dots">...</span>
+
+                        <!-- Páginas cercanas a la actual -->
+                        <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a th:if="${i >= currentPage - 2 && i <= currentPage + 2}"
+                               th:href="@{/admin/personal(page=${i}, busqueda=${busqueda})}"
+                               th:classappend="${i == currentPage} ? 'active' : ''"
+                               class="page-link"
+                               th:text="${i + 1}">
+                                1
+                            </a>
+                        </th:block>
+
+                        <!-- Puntos suspensivos finales -->
+                        <span th:if="${currentPage < totalPages - 4}" class="page-dots">...</span>
+
+                        <!-- Última página -->
+                        <a th:if="${currentPage < totalPages - 3}"
+                           th:href="@{/admin/personal(page=${totalPages - 1}, busqueda=${busqueda})}"
+                           class="page-link"
+                           th:text="${totalPages}">
+                            10
+                        </a>
+                    </div>
+
+                    <!-- Botón Siguiente -->
+                    <a th:href="@{/admin/personal(page=${currentPage + 1}, busqueda=${busqueda})}"
+                       th:classappend="${currentPage >= totalPages - 1} ? 'disabled' : ''"
+                       class="page-link page-next">
+                        Siguiente
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<!-- Modal Crear Empleado -->
+<div id="modalCrear" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+        <form th:action="@{/admin/personal}"
+              th:object="${empleadoDto}"
+              method="post"
+              id="formCrear">
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <div class="modal-title">
+                    <h2>Nuevo Empleado</h2>
+                    <p>Completa los datos del nuevo empleado</p>
+                </div>
+                <button type="button" class="modal-close" onclick="cerrarModalCrear()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombres">
+                            <i class="bi bi-person"></i>
+                            Nombre completo
+                        </label>
+                        <input type="text"
+                               id="nombres"
+                               th:field="*{nombres}"
+                               class="form-input"
+                               placeholder="Ej: Juan Pérez García"
+                               required>
+                        <span class="error-text" th:if="${#fields.hasErrors('nombres')}" th:errors="*{nombres}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">
+                            <i class="bi bi-envelope"></i>
+                            Correo electrónico
+                        </label>
+                        <input type="email"
+                               id="correo"
+                               th:field="*{correo}"
+                               class="form-input"
+                               placeholder="ejemplo@gourmet.com"
+                               required>
+                        <span class="error-text" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">
+                            <i class="bi bi-telephone"></i>
+                            Teléfono
+                        </label>
+                        <input type="tel"
+                               id="telefono"
+                               th:field="*{telefono}"
+                               class="form-input"
+                               placeholder="999 888 777">
+                        <span class="error-text" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="clave">
+                            <i class="bi bi-key"></i>
+                            Contraseña
+                        </label>
+                        <input type="password"
+                               id="clave"
+                               th:field="*{clave}"
+                               class="form-input"
+                               placeholder="Mínimo 6 caracteres"
+                               required>
+                        <span class="error-text" th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}"></span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="rol">
+                            <i class="bi bi-shield-check"></i>
+                            Rol
+                        </label>
+                        <select id="rol"
+                                th:field="*{rol}"
+                                class="form-select"
+                                required>
+                            <option value="">Selecciona un rol</option>
+                            <option value="EMPLEADO">EMPLEADO</option>
+                            <option value="ADMIN">ADMIN</option>
+                        </select>
+                        <span class="error-text" th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="cerrarModalCrear()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-primary">
+                    <i class="bi bi-check-circle"></i>
+                    Crear Empleado
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Cambiar Rol -->
+<div id="modalCambiarRol" class="modal-overlay" style="display:none;">
+    <div class="modal-box modal-small">
+        <form id="formCambiarRol" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+            <div class="modal-header">
+                <div class="modal-icon warning">
+                    <i class="bi bi-arrow-left-right"></i>
+                </div>
+                <div class="modal-title">
+                    <h2>Cambiar Rol</h2>
+                    <p id="nombreEmpleado">Empleado</p>
+                </div>
+                <button type="button" class="modal-close" onclick="cerrarModalCambiarRol()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="nuevoRol">
+                        <i class="bi bi-shield-check"></i>
+                        Nuevo rol
+                    </label>
+                    <select id="nuevoRol"
+                            name="rol"
+                            class="form-select"
+                            required>
+                        <option value="EMPLEADO">EMPLEADO</option>
+                        <option value="ADMIN">ADMIN</option>
+                    </select>
+                </div>
+
+                <div class="info-box">
+                    <i class="bi bi-info-circle"></i>
+                    <p>Este cambio afectará los permisos del empleado inmediatamente.</p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="cerrarModalCambiarRol()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-primary">
+                    <i class="bi bi-save"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Cambiar Estado -->
+<div id="modalEstado" class="modal-overlay" style="display:none;">
+    <div class="modal-box modal-small">
+        <form id="formEstado" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <input type="hidden" id="estadoActivo" name="activo">
+
+            <div class="modal-header">
+                <div class="modal-icon danger" id="iconoEstado">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <div class="modal-title">
+                    <h2 id="tituloEstado">Desactivar Cuenta</h2>
+                    <p id="nombreEmpleadoEstado">Empleado</p>
+                </div>
+                <button type="button" class="modal-close" onclick="cerrarModalEstado()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="info-box danger" id="infoEstado">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <p id="mensajeEstado">
+                        Al desactivar esta cuenta, el empleado no podrá iniciar sesión hasta que sea reactivado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="cerrarModalEstado()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-danger" id="btnConfirmarEstado">
+                    <i class="bi bi-x-circle"></i>
+                    Desactivar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
