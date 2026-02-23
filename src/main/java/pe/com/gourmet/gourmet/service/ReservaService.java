@@ -67,9 +67,10 @@ public class ReservaService {
             LocalTime horaMinima = ahora.plusHours(3);
 
             if (dto.getHora().isBefore(horaMinima)) {
+                String horaFormateada = horaMinima.truncatedTo(java.time.temporal.ChronoUnit.MINUTES).toString();
                 throw new IllegalArgumentException(
                         String.format("Para reservas del mismo día necesitas al menos 3 horas de anticipación. Hora mínima disponible: %s",
-                                horaMinima.toString())
+                                horaFormateada)
                 );
             }
         }
