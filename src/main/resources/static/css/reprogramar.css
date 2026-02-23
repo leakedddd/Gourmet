@@ -261,6 +261,12 @@ body.loaded .reserva-header {
     border-color: #f3f4f6;
 }
 
+.day.empty {
+    visibility: hidden;
+    height: 54px;
+    width: 54px;
+}
+
 /* ====== HORAS ====== */
 .hours-grid {
     display: grid;
