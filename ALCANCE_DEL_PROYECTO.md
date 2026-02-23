@@ -79,13 +79,12 @@
 | Fecha no pasada | Solo se puede reservar desde hoy en adelante | Backend (`@FutureOrPresent` + validacion manual) |
 | Fecha maxima 3 meses | No se puede reservar mas alla de 3 meses a futuro | Backend (`hoy.plusMonths(3)`) + Frontend (calendario deshabilitado) |
 | Hora obligatoria | Debe seleccionar una hora de las disponibles | Backend (`@NotNull`) + Frontend (validacion JS) |
-| Horarios fijos disponibles | 20 franjas predefinidas: 13:00-15:30, 16:00-16:30, 19:00-20:30, 21:30 | Frontend (opciones fijas en HTML) |
+| Horarios fijos disponibles | 21 franjas predefinidas: 13:00-15:30, 16:00-16:30, 19:00-20:30, 21:30 | Backend (`HORARIOS_VALIDOS`) + Frontend (opciones fijas en HTML) |
 | Corte mismo dia 18:30 | Despues de las 6:30 PM no se puede reservar para el mismo dia | Backend (validacion en `ReservaService`) |
 | Anticipacion minima 3 horas | Para reservas del mismo dia, se requieren al menos 3 horas de anticipacion | Backend (`ahora.plusHours(3)`) |
 | Cantidad de personas obligatoria | Debe indicar el numero de comensales | Backend (`@NotNull`, `@Min(1)`) |
 | Minimo 1 persona | No se permite reservar para 0 personas | Backend (`@Min(value = 1)`) |
-| Maximo 8 personas (UI) | La interfaz ofrece botones del 1 al 8 | Frontend (botones fijos) |
-| Sin validacion de maximo en backend | Podria enviarse un numero mayor a 8 por API | **No implementado en backend** |
+| Maximo 8 personas | No se permite reservar para mas de 8 personas | Backend (`@Max(value = 8)`) + Frontend (botones fijos) |
 | Observaciones hasta 500 caracteres | Campo opcional con limite de texto | Frontend (truncado JS) + Base de datos (`length = 500`) |
 | Estado inicial ACTIVA | Toda reserva nueva se crea como ACTIVA | Backend (valor por defecto) |
 | Sin verificacion de disponibilidad | No se valida si ya existen reservas en el mismo horario | **No implementado** |
@@ -106,7 +105,7 @@
 | Solo estado ACTIVA | No se pueden reprogramar reservas ATENDIDA o CANCELADA | Backend (validacion de estado) |
 | Fecha minima: manana | No se puede reprogramar para el mismo dia | Backend (`hoy.plusDays(1)`) + (`@Future`) |
 | Fecha maxima: 3 meses | Misma ventana que reserva nueva | Backend (`hoy.plusMonths(3)`) |
-| Hora obligatoria | Debe seleccionar nueva hora | Backend (`@NotNull`) |
+| Hora obligatoria y valida | Debe seleccionar una hora de las 21 franjas permitidas | Backend (`@NotNull` + `HORARIOS_VALIDOS`) |
 | Observaciones hasta 500 caracteres | Campo opcional con limite | Frontend (truncado JS) |
 
 ### Gestionar Reservas (Empleado/Admin)
@@ -181,5 +180,4 @@
 | Historial de cambios o auditoria | No implementado |
 | Gestion de multiples sucursales | No implementado |
 | Politica de cancelacion con penalidad | No implementado |
-| Validacion de maximo de personas en backend | No implementado (solo frontend) |
 | Fechas de cierre o dias feriados | No implementado |

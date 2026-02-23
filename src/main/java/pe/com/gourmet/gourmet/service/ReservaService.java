@@ -13,9 +13,20 @@ import pe.com.gourmet.gourmet.repository.UsuarioRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ReservaService {
+
+    private static final Set<LocalTime> HORARIOS_VALIDOS = Set.of(
+            LocalTime.of(13, 0), LocalTime.of(13, 15), LocalTime.of(13, 30),
+            LocalTime.of(13, 45), LocalTime.of(14, 0), LocalTime.of(14, 15),
+            LocalTime.of(14, 30), LocalTime.of(14, 45), LocalTime.of(15, 0),
+            LocalTime.of(15, 15), LocalTime.of(15, 30), LocalTime.of(16, 0),
+            LocalTime.of(16, 30), LocalTime.of(19, 0), LocalTime.of(19, 15),
+            LocalTime.of(19, 30), LocalTime.of(19, 45), LocalTime.of(20, 0),
+            LocalTime.of(20, 15), LocalTime.of(20, 30), LocalTime.of(21, 30)
+    );
 
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;
@@ -42,6 +53,9 @@ public class ReservaService {
 
         if (dto.getFecha().isAfter(maxFecha))
             throw new IllegalArgumentException("Solo puedes reservar hasta dentro de 3 meses.");
+
+        if (!HORARIOS_VALIDOS.contains(dto.getHora()))
+            throw new IllegalArgumentException("La hora seleccionada no es un horario válido del restaurante.");
 
         if (dto.getFecha().isEqual(hoy)) {
             // Verificar que sea antes de las 18:30 (6:30 PM)
@@ -137,6 +151,9 @@ public class ReservaService {
 
         if (dto.getFecha().isAfter(maxFecha))
             throw new IllegalArgumentException("Solo puedes reprogramar hasta dentro de 3 meses.");
+
+        if (!HORARIOS_VALIDOS.contains(dto.getHora()))
+            throw new IllegalArgumentException("La hora seleccionada no es un horario válido del restaurante.");
 
         r.setFecha(dto.getFecha());
         r.setHora(dto.getHora());

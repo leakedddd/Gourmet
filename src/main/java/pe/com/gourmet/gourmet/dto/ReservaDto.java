@@ -1,6 +1,7 @@
 package pe.com.gourmet.gourmet.dto;
 
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +19,7 @@ public class ReservaDto {
 
     @NotNull(message = "El número de personas es obligatorio")
     @Min(value = 1, message = "Mínimo 1 persona")
+    @Max(value = 8, message = "Máximo 8 personas por reserva")
     private Integer personas;
 
     private String observaciones;
