@@ -24,6 +24,9 @@
                th:name="${_csrf.parameterName}"
                th:value="${_csrf.token}">
 
+        <!-- Error backend -->
+        <div th:if="${error}" class="error-box" th:text="${error}"></div>
+
         <!-- 1. Cantidad de personas -->
         <section class="block">
             <h2>Elige la cantidad de personas</h2>
@@ -118,10 +121,7 @@
             </div>
         </section>
 
-        <!-- 5. Error backend -->
-        <div th:if="${error}" class="error-box" th:text="${error}"></div>
-
-        <!-- 6. Botón -->
+        <!-- 5. Botón -->
         <div class="actions-submit">
             <button type="submit" class="btn-primary">Confirmar reserva</button>
         </div>
