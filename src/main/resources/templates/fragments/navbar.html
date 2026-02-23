@@ -18,8 +18,8 @@
 
         <div class="actions">
             <!-- Reservar: solo CLIENTE (si quieres que anónimo vaya a login, está OK también) -->
-            <a th:href="@{/reservar}" class="btn-reservar" sec:authorize="hasRole('CLIENTE')">RESERVAR</a>
-            <a th:href="@{/login}" class="btn-reservar" sec:authorize="isAnonymous()">RESERVAR</a>
+            <a th:href="@{/reservar}" class="btn-reservar" sec:authorize="hasRole('CLIENTE')"><span>RESERVAR</span></a>
+            <a th:href="@{/login}" class="btn-reservar" sec:authorize="isAnonymous()"><span>RESERVAR</span></a>
 
             <div class="user-menu-wrapper">
                 <button class="user-btn">
