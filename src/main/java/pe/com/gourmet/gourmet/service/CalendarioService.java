@@ -28,12 +28,15 @@ public class CalendarioService {
                 dias.add(dia);
             }
 
+            int offset = ym.atDay(1).getDayOfWeek().getValue() - 1;
+
             Map<String, Object> mes = new HashMap<>();
             String nombreMes = ym.getMonth().getDisplayName(
                     java.time.format.TextStyle.FULL,
                     new java.util.Locale("es", "ES")
             );
             mes.put("nombre", nombreMes + " " + ym.getYear());
+            mes.put("offset", offset);
             mes.put("dias", dias);
 
             meses.add(mes);
@@ -66,12 +69,15 @@ public class CalendarioService {
                 dias.add(dia);
             }
 
+            int offset = ym.atDay(1).getDayOfWeek().getValue() - 1;
+
             Map<String, Object> mes = new HashMap<>();
             String nombreMes = ym.getMonth().getDisplayName(
                     java.time.format.TextStyle.FULL,
                     new java.util.Locale("es", "ES")
             );
             mes.put("nombre", nombreMes + " " + ym.getYear());
+            mes.put("offset", offset);
             mes.put("dias", dias);
 
             meses.add(mes);

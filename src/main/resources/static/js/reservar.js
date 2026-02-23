@@ -32,6 +32,12 @@ function renderCalendar() {
         calTitle.textContent = mes.nombre;
         calDays.innerHTML = "";
 
+        for (let i = 0; i < (mes.offset || 0); i++) {
+            const empty = document.createElement('div');
+            empty.className = "day empty";
+            calDays.appendChild(empty);
+        }
+
         mes.dias.forEach(dia => {
             const btn = document.createElement('button');
             btn.type = "button";
