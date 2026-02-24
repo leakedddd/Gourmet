@@ -2,11 +2,12 @@ package pe.com.gourmet.gourmet.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class EmpleadoDto {
     @NotBlank private String nombres;
     @Email @NotBlank private String correo;
-    @NotBlank private String clave;
+    @NotBlank @Size(min = 6, message = "La clave debe tener al menos 6 caracteres") private String clave;
     @NotBlank private String rol; // "EMPLEADO" o "ADMIN" si quieres permitir
     private String telefono;
 
