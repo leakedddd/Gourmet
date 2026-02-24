@@ -20,6 +20,21 @@
         <h2>Bienvenido</h2>
         <p class="auth-subtitle">Inicia sesión para gestionar tus reservas.</p>
 
+        <div th:if="${param.error}" class="alert-msg alert-error">
+            <i class="bi bi-x-circle-fill"></i>
+            <span>Correo o clave incorrectos.</span>
+        </div>
+
+        <div th:if="${param.logout}" class="alert-msg alert-info">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Sesión cerrada correctamente.</span>
+        </div>
+
+        <div th:if="${param.registered}" class="alert-msg alert-success">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Cuenta creada. Ahora inicia sesión.</span>
+        </div>
+
         <form th:action="@{/login}" method="post" class="auth-form">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <div class="form-group">
@@ -43,18 +58,6 @@
             <p class="register-text">
                 ¿No tienes cuenta?
                 <a th:href="@{/register}">Regístrate</a>.
-            </p>
-
-            <p th:if="${param.error}" class="error-text">
-                Correo o clave incorrectos.
-            </p>
-
-            <p th:if="${param.logout}" class="ok-text">
-                Sesión cerrada.
-            </p>
-
-            <p th:if="${param.registered}" class="ok-text">
-                Cuenta creada. Ahora inicia sesión.
             </p>
 
         </form>

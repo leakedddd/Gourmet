@@ -146,14 +146,38 @@ body {
     text-decoration: underline;
 }
 
-/* Error */
-.error-text {
-    margin-top: 0.6rem;
-    background: #ffe6e6;
-    border: 1px solid #ffbaba;
-    color: #9f1c1c;
-    padding: 0.5rem 0.7rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    text-align: center;
+/* Alertas */
+.alert-msg {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.alert-msg i {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+}
+
+.alert-info {
+    background: #f0f4ff;
+    border: 1px solid #c7d7fe;
+    color: #1e3a5f;
 }
