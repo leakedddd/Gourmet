@@ -57,11 +57,10 @@ Para crear una cuenta como cliente:
 4. Seleccionar la **cantidad de personas** (1 a 8).
 5. Opcionalmente, escribir **observaciones** (maximo 500 caracteres).
 6. Hacer clic en "Confirmar reserva".
-7. Se muestra una pantalla de confirmacion con los datos de la reserva.
+7. El sistema redirige a **Mis Reservas** donde se puede ver la reserva recien creada.
 
 *[Captura de pantalla: Formulario de reserva - seleccion de fecha]*
 *[Captura de pantalla: Formulario de reserva - seleccion de hora y personas]*
-*[Captura de pantalla: Confirmacion de reserva exitosa]*
 
 ---
 
@@ -159,7 +158,7 @@ El administrador tiene acceso a las mismas funcionalidades del empleado descrita
    - **Nombres** (obligatorio)
    - **Correo electronico** (obligatorio, debe ser unico)
    - **Telefono** (opcional)
-   - **Contrasena** (obligatorio)
+   - **Contrasena** (obligatorio, minimo 6 caracteres)
    - **Rol** (EMPLEADO o ADMIN)
 3. Hacer clic en "Crear".
 

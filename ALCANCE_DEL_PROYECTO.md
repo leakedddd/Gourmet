@@ -52,7 +52,7 @@
 | Nombre obligatorio | Campo `nombres` no puede estar vacio | Backend (`@NotBlank`) |
 | Correo obligatorio y valido | Debe tener formato de email valido | Backend (`@Email`, `@NotBlank`) |
 | Correo unico | No puede existir otro usuario con el mismo correo | Backend (`existsByCorreo()`) |
-| Clave obligatoria | Campo `clave` no puede estar vacio | Backend (`@NotBlank`) |
+| Clave minimo 6 caracteres | La contrasena debe tener al menos 6 caracteres | Backend (`@NotBlank`, `@Size(min = 6)`) |
 | Rol obligatorio | Debe ser `EMPLEADO` o `ADMIN` | Backend (`@NotBlank` + `RolUsuario.valueOf()`) |
 | Telefono opcional | No tiene validacion requerida | Sin validacion |
 | Solo ADMIN puede crear | Requiere rol ADMIN para acceder al endpoint | Backend (`@PreAuthorize("hasRole('ADMIN')")`) |
